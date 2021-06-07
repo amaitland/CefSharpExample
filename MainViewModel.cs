@@ -14,8 +14,7 @@ namespace CefSharpExample
         public MainViewModel()
         {
             CefSharpSettings.ConcurrentTaskExecution = true;
-            CefSettings cefSettings = new CefSettings();
-            Cef.Initialize(cefSettings);
+            Cef.Initialize(new CefSettings());
 
             Browser = new TestBrowser()
             {
@@ -29,10 +28,10 @@ namespace CefSharpExample
             Browser.FrameLoadStart += _browser_FrameLoadStart;
         }
 
-        private async void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+        private void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             Browser.ShowDevTools();
-            var result = Browser.JsWorker.ExecuteCallback().GetAwaiter().GetResult();
+            Browser.JsWorker.ExecuteCallback().GetAwaiter().GetResult();
         }
 
         private void _browser_FrameLoadStart(object sender, FrameLoadStartEventArgs e)
@@ -40,13 +39,9 @@ namespace CefSharpExample
             StreamResourceInfo resourceStream = Application.GetResourceStream(new Uri("pack://application:,,,/testScript.js", UriKind.Absolute));
             string end = new StreamReader(resourceStream.Stream).ReadToEnd();
 
-            if (e.Frame.IsMain && e.Frame.Url != "about:blank")
+            if (e.Frame.IsMain)
             {
-                e.Frame.ExecuteJavaScriptAsync(end, $"about:blank/CodeInjection/{DateTime.Now.Ticks}");
-            }
-            else if (e.Frame.Url != "about:blank")
-            {
-                e.Frame.ExecuteJavaScriptAsync(string.Empty, "about:blank/FixScreen");
+                e.Frame.ExecuteJavaScriptAsync(end);
             }
         }
     }

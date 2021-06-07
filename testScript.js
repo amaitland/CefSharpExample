@@ -1,5 +1,3 @@
-﻿
-
-const TestFunc = () => true;
+﻿const TestFunc = () => true;
 
 worker.SetCallBacks(TestFunc);
