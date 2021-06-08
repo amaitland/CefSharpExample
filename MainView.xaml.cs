@@ -12,5 +12,10 @@ namespace CefSharpExample
             DataContext = new MainViewModel();
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainViewModel).ExecuteCallback();
+        }
     }
 }

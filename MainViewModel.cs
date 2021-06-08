@@ -24,14 +24,12 @@ namespace CefSharpExample
             Browser.JavascriptObjectRepository.Settings.LegacyBindingEnabled = true;
             Browser.JavascriptObjectRepository.NameConverter = null;
             Browser.JavascriptObjectRepository.Register("worker", Browser.JsWorker, isAsync: false);
-            Browser.FrameLoadEnd += Browser_FrameLoadEnd;
             Browser.FrameLoadStart += _browser_FrameLoadStart;
         }
 
-        private void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+        public async void ExecuteCallback()
         {
-            Browser.ShowDevTools();
-            Browser.JsWorker.ExecuteCallback().GetAwaiter().GetResult();
+            await Browser.JsWorker.ExecuteCallback();
         }
 
         private void _browser_FrameLoadStart(object sender, FrameLoadStartEventArgs e)
