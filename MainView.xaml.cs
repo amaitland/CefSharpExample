@@ -13,9 +13,10 @@ namespace CefSharpExample
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as MainViewModel).ExecuteCallback();
+            var viewModel = (MainViewModel)DataContext;
+            var response = await viewModel.Browser.JsWorker.ExecuteCallback();
         }
     }
 }

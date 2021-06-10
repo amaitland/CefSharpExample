@@ -19,17 +19,12 @@ namespace CefSharpExample
             Browser = new TestBrowser()
             {
                 JsWorker = new JsWorker(),
-                Address = "www.google.ru"
+                Address = "www.google.com"
             };
             Browser.JavascriptObjectRepository.Settings.LegacyBindingEnabled = true;
             Browser.JavascriptObjectRepository.NameConverter = null;
             Browser.JavascriptObjectRepository.Register("worker", Browser.JsWorker, isAsync: false);
             Browser.FrameLoadStart += _browser_FrameLoadStart;
-        }
-
-        public async void ExecuteCallback()
-        {
-            await Browser.JsWorker.ExecuteCallback();
         }
 
         private void _browser_FrameLoadStart(object sender, FrameLoadStartEventArgs e)
